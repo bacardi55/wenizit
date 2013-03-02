@@ -34,101 +34,31 @@ $app->match('/add', function() use ($app) {
             $pass = $form->get('password')->getData();
 
             if ($title && $date) {
-              echo $title.'<br>';
-              var_dump($date).'<br>';
-              echo $pass.'<br>';
-              if (new Datetime($date) < new Datetime()) {
-                $app['session']->getFlashBag()
-                  ->add('error', 'You can\'t set a past date');
-              }
-              else {
-                $cd = array(
-                  'title' => $title,
-                  'date' => $date,
-                  'password' => $pass,
-                );
-                $app['db']->insert('countdowns', $cd);
-              }
+                echo $title.'<br>';
+                var_dump($date).'<br>';
+                echo $pass.'<br>';
+                if (new Datetime($date) < new Datetime()) {
+                    $app['session']->getFlashBag()
+                      ->add('error', 'You can\'t set a past date');
+                }
+                else {
+                    $cd = array(
+                        'title' => $title,
+                        'date' => $date,
+                        'password' => $pass,
+                    );
+                    $app['db']->insert('countdowns', $cd);
+                }
             }
             else {
-              $app['session']->getFlashBag()
-                ->add('error', 'Title and date are mandatory');
+                $app['session']->getFlashBag()
+                    ->add('error', 'Title and date are mandatory');
             }
         }
     }
 
     return $app['twig']->render('add.html.twig', array('form' => $form->createView()));
 })->bind('cd-add');
-
-
-
-$app->match('/login', function() use ($app) {
-
-    $form = $app['form.factory']->createBuilder('form')
-        ->add('email', 'email', array(
-            'label'       => 'Email',
-            'constraints' => array(
-                new Assert\NotBlank(),
-                new Assert\Email(),
-            ),
-        ))
-        ->add('password', 'password', array(
-            'label'       => 'Password',
-            'constraints' => array(
-                new Assert\NotBlank(),
-            ),
-        ))
-        ->getForm()
-    ;
-
-    if ('POST' === $app['request']->getMethod()) {
-        $form->bindRequest($app['request']);
-
-        if ($form->isValid()) {
-
-            $email    = $form->get('email')->getData();
-            $password = $form->get('password')->getData();
-
-            if ('email@example.com' == $email && 'password' == $password) {
-                $app['session']->set('user', array(
-                    'email' => $email,
-                ));
-
-                $app['session']->setFlash('notice', 'You are now connected');
-
-                return $app->redirect($app['url_generator']->generate('homepage'));
-            }
-
-            $form->addError(new FormError('Email / password does not match (email@example.com / password)'));
-        }
-    }
-
-    return $app['twig']->render('login.html.twig', array('form' => $form->createView()));
-})->bind('login');
-
-$app->match('/doctrine', function() use ($app) {
-    return $app['twig']->render(
-        'doctrine.html.twig',
-        array(
-            'posts' => $app['db']->fetchAll('SELECT * FROM post')
-        )
-    );
-})->bind('doctrine');
-
-
-$app->match('/logout', function() use ($app) {
-    $app['session']->clear();
-
-    return $app->redirect($app['url_generator']->generate('homepage'));
-})->bind('logout');
-
-$app->get('/page-with-cache', function() use ($app) {
-    $response = new Response($app['twig']->render('page-with-cache.html.twig', array('date' => date('Y-M-d h:i:s'))));
-    $response->setTtl(10);
-
-    return $response;
-})->bind('page_with_cache');
-
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
