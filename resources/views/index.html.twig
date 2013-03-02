@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'homepage' %}
+
+{% block content %}
+    <h1>Hello</h1>
+    <p>
+      Welcome to « Wenizit » (pronounced « When is it »). This little application let you create count down and share them to the world.
+    </p>
+
+    <p>
+      What you can do:
+      <ul>
+        <li>Create public count down</li>
+        <li>Create private count down</li>
+      </ul>
+    </p>
+    <p>
+      A countdown is composed of a title and datetime. It will display a Javascript count down that will let people now when the big event arrive :).
+      That's not that much for now but that's all I need. I might add some feature like a «share» button or stull like that (maybe more field like description, image, …).
+    </p>
+
+    <p>It's propulsed by <a href="http://php.net">php</a> and the micro framework <a href="http://silex.sensio.org">silex</a> and <a href="http://twitter.github.com/bootstrap/">twitter bootstrap</a></p>
+    <p>This little application is of course opensource and can be found here :)</p>
+
+{% endblock %}
