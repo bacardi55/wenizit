@@ -1,0 +1,6 @@
+*.swp
+resources/cache/*
+resources/log/*
+vendor/
+web/assets/*
+resources/app.db
