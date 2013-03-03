@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    {% if auth != true %}
+    <h1>This countdown is protected, do you know the password?</h1>
+    <form action="" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ 'Send'|trans }}</button>
+        </div>
+    </form>
+    {% else %}
+      <div class="timer-area">
+        <h1>{{ title }}</h1>
+        <ul id="countdown">
+          <li>
+            <span class="days">00</span>
+            <p class="timeRefDays">days</p>
+          </li>
+          <li>
+            <span class="hours">00</span>
+            <p class="timeRefHours">hours</p>
+          </li>
+          <li>
+            <span class="minutes">00</span>
+            <p class="timeRefMinutes">minutes</p>
+          </li>
+          <li>
+            <span class="seconds">00</span>
+            <p class="timeRefSeconds">seconds</p>
+          </li>
+        </ul>
+        <h1>({{ date }})</h1>
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    <!-- JS -->
+    <script>
+      $(document).ready(function(){
+        $("#countdown").countdown({
+          date: "{{ date }}",
+          format: "on"
+        },
+
+        function() {
+          // callback function
+        });
+      });
+	</script>
+{% endblock %}

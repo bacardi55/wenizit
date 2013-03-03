@@ -26,6 +26,8 @@ $app['assetic.output.path_to_css']      = 'css/styles.css';
 $app['assetic.input.path_to_js']        = array(
     $app['assetic.input.path_to_assets'] . 'js/bootstrap.min.js',
     $app['assetic.input.path_to_assets'] . 'js/script.js',
+    $app['assetic.input.path_to_assets'] . 'js/countdown.js',
+    $app['assetic.input.path_to_assets'] . 'js/plugins.js',
 );
 $app['assetic.output.path_to_js']       = 'js/scripts.js';
 $app['assetic.filter.yui_compressor.path'] = '/usr/share/yui-compressor/yui-compressor.jar';
