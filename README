@@ -1,3 +1,12 @@
 ## wenizit
 
 A simple php / JS countdown application.
+
+Install it via composer
+
+Then create the database using 
+php console doctrine:database:create
+
+(it use sqlite)
+
+and you re good to go
